@@ -466,7 +466,7 @@ metadata:
   name: store-admin
 spec:
   ports:
-  - port: 80
+  - port: 91
     targetPort: 8081
   selector:
     app: store-admin
