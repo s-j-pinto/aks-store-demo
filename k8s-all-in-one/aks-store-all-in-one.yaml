@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongodb
 spec:
+  serviceName: mongodb
   replicas: 1
   selector:
     matchLabels:
@@ -37,7 +38,7 @@ spec:
   - port: 27017
   selector:
     app: mongodb
-  type: ClusterIP    
+  type: ClusterIP  
 ---
 apiVersion: v1
 data:
@@ -48,10 +49,11 @@ metadata:
   name: rabbitmq-enabled-plugins
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: rabbitmq
 spec:
+  serviceName: rabbitmq
   replicas: 1
   selector:
     matchLabels:
@@ -150,8 +152,29 @@ spec:
             cpu: 1m
             memory: 50Mi
           limits:
-            cpu: 75m
-            memory: 128Mi
+            cpu: 100m
+            memory: 256Mi
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          failureThreshold: 5
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
       initContainers:
       - name: wait-for-rabbitmq
         image: busybox
@@ -161,8 +184,8 @@ spec:
             cpu: 1m
             memory: 50Mi
           limits:
-            cpu: 75m
-            memory: 128Mi    
+            cpu: 100m
+            memory: 256Mi   
 ---
 apiVersion: v1
 kind: Service
@@ -220,6 +243,26 @@ spec:
           limits:
             cpu: 5m
             memory: 20Mi
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          failureThreshold: 10
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service
@@ -255,13 +298,30 @@ spec:
         image: ghcr.io/azure-samples/aks-store-demo/product-service:latest
         ports:
         - containerPort: 3002
+        env: 
+        - name: AI_SERVICE_URL
+          value: "http://ai-service:5001/"
         resources:
           requests:
             cpu: 1m
             memory: 1Mi
           limits:
-            cpu: 1m
-            memory: 5Mi
+            cpu: 2m
+            memory: 20Mi
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3002
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3002
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service
@@ -310,6 +370,27 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service
@@ -350,8 +431,6 @@ spec:
           value: "http://product-service:3002/"
         - name: VUE_APP_MAKELINE_SERVICE_URL
           value: "http://makeline-service:3001/"
-        - name: VUE_APP_AI_SERVICE_URL
-          value: "http://ai-service:5001/"
         resources:
           requests:
             cpu: 1m
@@ -359,6 +438,27 @@ spec:
           limits:
             cpu: 1000m
             memory: 512Mi
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          failureThreshold: 3
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          failureThreshold: 5
+          initialDelaySeconds: 3
+          periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service
@@ -401,8 +501,8 @@ spec:
             cpu: 1m
             memory: 1Mi
           limits:
-            cpu: 1m
-            memory: 5Mi
+            cpu: 2m
+            memory: 20Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -433,5 +533,5 @@ spec:
             cpu: 1m
             memory: 1Mi
           limits:
-            cpu: 1m
-            memory: 5Mi
+            cpu: 2m
+            memory: 20Mi
