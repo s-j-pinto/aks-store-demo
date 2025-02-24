@@ -122,9 +122,9 @@ async fn main() -> std::io::Result<()> {
         Product {
             id: 2,
             name: "Salty Sailor's Squeaky Squid".to_string(),
-            price: 6.99,
+            price: 7.99,
             description: "Let your dog set sail with the Salty Sailor's Squeaky Squid. This interactive toy provides hours of fun, featuring multiple squeakers and crinkle tentacles.".to_string(),
-            image: "/placeholder.png".to_string()
+            image: "/salty.png".to_string()
         },
         Product {
             id: 3,
