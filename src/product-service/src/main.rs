@@ -138,7 +138,7 @@ async fn main() -> std::io::Result<()> {
             name: "Ocean Explorer's Puzzle Ball".to_string(),
             price: 11.99,
             description: "Challenge your pet's problem-solving skills with the Ocean Explorer's Puzzle Ball. This interactive toy features hidden compartments and treats, providing mental stimulation and entertainment.".to_string(),
-            image: "/ocean.jpgg".to_string()
+            image: "/ocean.jpg".to_string()
         },
         Product {
             id: 5,
