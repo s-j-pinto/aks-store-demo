@@ -117,7 +117,7 @@ async fn main() -> std::io::Result<()> {
             name: "Captain Catnip's Fisherman's Friend".to_string(),
             price: 9.99,
             description: "Watch your feline friend embark on a fishing adventure with Captain Catnip's Fisherman's Friend toy. Packed with irresistible catnip and dangling fish lure.".to_string(),
-            image: "/placeholder.png".to_string()
+            image: "/catnip.jpg".to_string()
         },
         Product {
             id: 2,
