@@ -6,6 +6,7 @@
     <br/>
     <div class="order-header">
       <p><b>Order ID:</b> {{ order.orderId }}</p>
+      <p><b>Order Date Time:</b> {{ order.orderTime }}</p>
       <p><b>Customer ID:</b> {{ order.customerId }}</p>
       <p><b>Status:</b> {{ order.status }}</p>
     </div>
