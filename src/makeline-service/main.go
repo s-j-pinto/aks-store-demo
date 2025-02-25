@@ -121,6 +121,9 @@ func fetchOrders(c *gin.Context) {
 			// add orderkey to order
 			order.OrderID = orderKey
 
+			// set the orderTime to system time
+			order.OrderTime = time.Now()
+
 			// set the status to pending
 			order.Status = Pending
 
@@ -295,10 +298,13 @@ func main() {
 }
 
 type order struct {
-	OrderID    string `json:"orderId"`
-	CustomerID string `json:"customerId"`
-	Items      []item `json:"items"`
-	Status     status `json:"status"`
+	OrderID string `json:"orderId"`
+	// OrderTime represents the date and time when the order was placed.
+	// It is serialized to JSON using the "orderTime" key.
+	OrderTime  time.Time `json:"orderTime"`
+	CustomerID string    `json:"customerId"`
+	Items      []item    `json:"items"`
+	Status     status    `json:"status"`
 }
 
 type status int
