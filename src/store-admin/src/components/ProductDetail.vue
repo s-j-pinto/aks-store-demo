@@ -1,22 +1,24 @@
 <template>
-  <div class="action-button">
-    <router-link :to="`/product/${this.$route.params.id}/edit`">
-      <button class="button">Edit Product</button>
-    </router-link>
-  </div>
-  <br/>
-  <div class="product-detail" v-if="productExists">
-    <div class="product-image">
-      <img :src="product.image" alt="Product Image">
+  <div>
+    <div class="action-button">
+      <router-link :to="`/product/${this.$route.params.id}/edit`">
+        <button class="button">Edit Product</button>
+      </router-link>
     </div>
-    <div class="product-info">
-      <h2>{{ product.name }} - {{ product.price }}</h2>
-      <small>Product ID: {{ product.id }}</small>
-      <p>{{ product.description }}</p>
+    <br/>
+    <div class="product-detail" v-if="productExists">
+      <div class="product-image">
+        <img :src="product.image" alt="Product Image">
+      </div>
+      <div class="product-info">
+        <h2>{{ product.name }} - {{ product.price }}</h2>
+        <small>Product ID: {{ product.id }}</small>
+        <p>{{ product.description }}</p>
+      </div>
     </div>
-  </div>
-  <div class="product-detail" v-else>
-    <h3>Product not found</h3>
+    <div class="product-detail" v-else>
+      <h3>Product not found</h3>
+    </div>
   </div>
 </template>
 
