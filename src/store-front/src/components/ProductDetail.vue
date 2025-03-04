@@ -7,7 +7,7 @@
       </div>
       <div class="product-info">
         <h2>{{ product.name }}</h2>
-        <small>Product ID: {{ product.id }}</small>
+        <small>Product id: {{ product.id }}</small>
         <p>{{ product.description }}</p>
         <div class="product-controls">
           <p>
