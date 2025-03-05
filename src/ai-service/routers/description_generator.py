@@ -8,8 +8,12 @@ from typing import Any, List, Dict
 import os
 import dotenv
 
+# Obtain the api key and org id for OpenAI from environment variables
+openai_key = os.environ["openai_key"]
+useAzureOpenAI  =  os.environ["use_azure_openai"]
+
 # Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 # Initialize the semantic kernel
 kernel: sk.Kernel = sk.Kernel()
@@ -17,22 +21,22 @@ kernel: sk.Kernel = sk.Kernel()
 kernel = sk.Kernel()
 
 # Get the Azure OpenAI deployment name, API key, and endpoint or OpenAI org id from environment variables
-useAzureOpenAI: str = os.environ.get("USE_AZURE_OPENAI")
-api_key: str = os.environ.get("OPENAI_API_KEY")
-useAzureAD: str = os.environ.get("USE_AZURE_AD")
+# useAzureOpenAI: str = os.environ.get("USE_AZURE_OPENAI")
+# api_key: str = os.environ.get("OPENAI_API_KEY")
+# useAzureAD: str = os.environ.get("USE_AZURE_AD")
 
-if (isinstance(api_key, str) == False or api_key == "") and (isinstance(useAzureAD, str) == False or useAzureAD == ""):
+if (isinstance(openai_key, str) == False or openai_key == ""):
     raise Exception("OPENAI_API_KEY environment variable must be set")
 if isinstance(useAzureOpenAI, str) == False or (useAzureOpenAI.lower() != "true" and useAzureOpenAI.lower() != "false"):
     raise Exception("USE_AZURE_OPENAI environment variable must be set to 'True' or 'False' string not boolean")
 
 
 if useAzureOpenAI.lower() == "false":
-    org_id = os.environ.get("OPENAI_ORG_ID")
+    org_id = os.environ["openai_org_id"]
     if isinstance(org_id, str) == False or org_id == "":
         raise Exception("OPENAI_ORG_ID environment variable must be set when USE_AZURE_OPENAI is set to False")
     # Add the OpenAI text completion service to the kernel
-    kernel.add_chat_service("dv", OpenAIChatCompletion("gpt-3.5-turbo", api_key, org_id))
+    kernel.add_chat_service("dv", OpenAIChatCompletion("gpt-3.5-turbo", openai_key, org_id))
 
 else:
     deployment: str = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME")

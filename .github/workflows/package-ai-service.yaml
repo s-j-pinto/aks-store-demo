@@ -3,19 +3,22 @@ name: package-ai-service
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     paths:
-      - 'src/ai-service/**'
+      - "src/ai-service/**"
 
   workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
+env:
+  openai_key: ${{ secrets.OPENAI_API_KEY }}
+  openai_org_id: ${{ secrets.OPENAI_ORG_ID }}
+  use_azure_openai: ${{ secrets.USE_AZURE_OPENAI }}
 
 jobs:
   publish-container-image:
-    
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +29,10 @@ jobs:
           echo "IMAGE=ai-service" >> "$GITHUB_OUTPUT"
           echo "VERSION=$(echo ${GITHUB_SHA} | cut -c1-7)" >> "$GITHUB_OUTPUT"
           echo "CREATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
+        # echo "OPENAPI_KEY= ${{ secrets.OPENAI_API_KEY_AKS_STORE }}" >> "$GITHUB_OUTPUT"
+        # echo "OPENAPI_ORGID= ${{ secrets.OPENAI_ORGID_AKS_STORE }}" >> "$GITHUB_OUTPUT"
 
+      # Here, you can use the secret in your commands or scripts
       - name: Env variable output
         id: test-variables
         run: |
@@ -34,20 +40,22 @@ jobs:
           echo ${{ steps.set-variables.outputs.IMAGE }}
           echo ${{ steps.set-variables.outputs.VERSION }}
           echo ${{ steps.set-variables.outputs.CREATED }}
+          echo ${{ steps.set-variables.outputs.OPENAPI_KEY }}
+          echo ${{ steps.set-variables.outputs.OPENAPI_ORGID }}
 
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      
+
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ github.token }}       
-      
+          password: ${{ github.token }}
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
