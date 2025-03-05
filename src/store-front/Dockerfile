@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:18.16.0-alpine as builder
+FROM node as builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
