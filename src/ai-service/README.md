@@ -22,11 +22,11 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-export USE_AZURE_OPENAI=True # set to False if you are not using Azure OpenAI
+export USE_AZURE_OPENAI=False # set to False if you are not using Azure OpenAI
 export AZURE_OPENAI_DEPLOYMENT_NAME= # required if using Azure OpenAI
 export AZURE_OPENAI_ENDPOINT= # required if using Azure OpenAI
-export OPENAI_API_KEY= # always required
-export OPENAI_ORG_ID= # required if using OpenAI
+export OPENAI_API_KEY= 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 # always required
+export OPENAI_ORG_ID= org-dE6Fqr73sCvwIZGE6S95DHsa # required if using OpenAI
 
 uvicorn main:app --host 127.0.0.1 --port 5001
 ```
