@@ -27,9 +27,9 @@ spec:
         - name: AZURE_OPENAI_ENDPOINT # required if using Azure OpenAI
           value: "False"
         - name: OPENAI_API_KEY # always required
-          value: "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"
+          value: ""
         - name: OPENAI_ORG_ID # required if using Public OpenAI
-          value: "org-dE6Fqr73sCvwIZGE6S95DHsa"
+          value: ""
         resources:
           requests:
             cpu: 20m
