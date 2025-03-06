@@ -34,7 +34,7 @@ jobs:
           echo "USE_AZURE_OPENAI= ${{ secrets.USE_AZURE_OPENAI }}" >> "$GITHUB_OUTPUT"
           echo "OPENAI_ORG_ID= ${{ secrets.OPENAI_ORG_ID }}" >> "$GITHUB_OUTPUT"
 
-      # Here, you can use the secret in your commands or scripts
+      # Here, you can use the secret in your commands or scripts triggered by the action
       - name: Env variable output
         id: test-variables
         run: |
