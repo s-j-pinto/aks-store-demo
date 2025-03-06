@@ -6,11 +6,11 @@ from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, OpenAICha
 from dotenv import load_dotenv
 from typing import Any, List, Dict
 import os
-import dotenv
+# import dotenv
 
 # Obtain the api key and org id for OpenAI from environment variables
-openai_key = os.environ["openai_key"]
-useAzureOpenAI  =  os.environ["use_azure_openai"]
+openai_key = os.environ.get("OPENAI_API_KEY")
+useAzureOpenAI = os.environ.get("USE_AZURE_OPENAI")
 
 # Load environment variables from .env file
 # load_dotenv()
@@ -32,26 +32,26 @@ if isinstance(useAzureOpenAI, str) == False or (useAzureOpenAI.lower() != "true"
 
 
 if useAzureOpenAI.lower() == "false":
-    org_id = os.environ["openai_org_id"]
+    org_id = os.environ.get("OPENAI_ORG_ID")
     if isinstance(org_id, str) == False or org_id == "":
         raise Exception("OPENAI_ORG_ID environment variable must be set when USE_AZURE_OPENAI is set to False")
     # Add the OpenAI text completion service to the kernel
     kernel.add_chat_service("dv", OpenAIChatCompletion("gpt-3.5-turbo", openai_key, org_id))
 
-else:
-    deployment: str = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME")
-    endpoint: str = os.environ.get("AZURE_OPENAI_ENDPOINT")
-    if isinstance(deployment, str) == False or isinstance(endpoint, str) == False or deployment == "" or endpoint == "":
-        raise Exception("AZURE_OPENAI_DEPLOYMENT_NAME and AZURE_OPENAI_ENDPOINT environment variables must be set when USE_AZURE_OPENAI is set to true")
-    # Add the Azure OpenAI text completion service to the kernel
-    if isinstance(useAzureAD, str) == True and useAzureAD.lower() == "true":
-        print("Authenticating to Azure OpenAI with Azure AD Workload Identity")
-        credential = DefaultAzureCredential()
-        access_token = credential.get_token("https://cognitiveservices.azure.com/.default")
-        kernel.add_chat_service("dv", AzureChatCompletion(deployment_name=deployment, endpoint=endpoint, api_key=access_token.token, ad_auth=True))
-    else:
-        print("Authenticating to Azure OpenAI with OpenAI API key")
-        kernel.add_chat_service("dv", AzureChatCompletion(deployment, endpoint, api_key))
+#else:
+#    deployment: str = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME")
+#    endpoint: str = os.environ.get("AZURE_OPENAI_ENDPOINT")
+#    if isinstance(deployment, str) == False or isinstance(endpoint, str) == False or deployment == "" or endpoint == "":
+#        raise Exception("AZURE_OPENAI_DEPLOYMENT_NAME and AZURE_OPENAI_ENDPOINT environment variables must be set when USE_AZURE_OPENAI is set to true")
+#    # Add the Azure OpenAI text completion service to the kernel
+#    if isinstance(useAzureAD, str) == True and useAzureAD.lower() == "true":
+#        print("Authenticating to Azure OpenAI with Azure AD Workload Identity")
+#        credential = DefaultAzureCredential()
+#        access_token = credential.get_token("https://cognitiveservices.azure.com/.default")
+#        kernel.add_chat_service("dv", AzureChatCompletion(deployment_name=deployment, endpoint=endpoint, api_key=access_token.token, ad_auth=True))
+#    else:
+#        print("Authenticating to Azure OpenAI with OpenAI API key")
+#        kernel.add_chat_service("dv", AzureChatCompletion(deployment, endpoint, api_key))
 
 # Import semantic skills from the "skills" directory
 skills_directory: str = "skills"
