@@ -30,9 +30,9 @@ jobs:
           echo "IMAGE=ai-service" >> "$GITHUB_OUTPUT"
           echo "VERSION=$(echo ${GITHUB_SHA} | cut -c1-7)" >> "$GITHUB_OUTPUT"
           echo "CREATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
-          echo "OPENAI_API_KEY= ${{ secrets.OPENAI_API_KEY }}" >> "$GITHUB_OUTPUT"
-          echo "USE_AZURE_OPENAI= ${{ secrets.USE_AZURE_OPENAI }}" >> "$GITHUB_OUTPUT"
-          echo "OPENAI_ORG_ID= ${{ secrets.OPENAI_ORG_ID }}" >> "$GITHUB_OUTPUT"
+        # echo "OPENAI_API_KEY= ${{ secrets.OPENAI_API_KEY }}" >> "$GITHUB_OUTPUT"
+        # echo "USE_AZURE_OPENAI= ${{ secrets.USE_AZURE_OPENAI }}" >> "$GITHUB_OUTPUT"
+        # echo "OPENAI_ORG_ID= ${{ secrets.OPENAI_ORG_ID }}" >> "$GITHUB_OUTPUT"
 
       # Here, you can use the secret in your commands or scripts triggered by the action
       - name: Env variable output
@@ -42,9 +42,9 @@ jobs:
           echo ${{ steps.set-variables.outputs.IMAGE }}
           echo ${{ steps.set-variables.outputs.VERSION }}
           echo ${{ steps.set-variables.outputs.CREATED }}
-          echo ${{ steps.set-variables.outputs.OPENAPI_KEY }}
-          echo ${{ steps.set-variables.outputs.OPENAPI_ORGID }}
-          echo ${{ steps.set-variables.outputs.USE_AZURE_OPENAI }}
+        # echo ${{ steps.set-variables.outputs.OPENAPI_KEY }}
+        # echo ${{ steps.set-variables.outputs.OPENAPI_ORGID }}
+        # echo ${{ steps.set-variables.outputs.USE_AZURE_OPENAI }}
 
       - name: Checkout code
         uses: actions/checkout@v2
