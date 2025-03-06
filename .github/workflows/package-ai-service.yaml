@@ -13,15 +13,13 @@ permissions:
   contents: read
   packages: write
 
-env:
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
-  USE_AZURE_OPENAI: ${{ secrets.USE_AZURE_OPENAI }}
-
 jobs:
   publish-container-image:
     runs-on: ubuntu-latest
-
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
+      USE_AZURE_OPENAI: ${{ secrets.USE_AZURE_OPENAI }}
     steps:
       - name: Set environment variables
         id: set-variables
