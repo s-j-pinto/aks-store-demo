@@ -3,7 +3,7 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import Response, JSONResponse
 import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, OpenAIChatCompletion
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from typing import Any, List, Dict
 import os
 # import dotenv
