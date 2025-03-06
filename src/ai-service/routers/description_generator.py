@@ -11,6 +11,8 @@ import os
 # Obtain the api key and org id for OpenAI from environment variables
 openai_key = os.environ.get("OPENAI_API_KEY")
 useAzureOpenAI = os.environ.get("USE_AZURE_OPENAI")
+print(openai_key)
+print(useAzureOpenAI)
 
 # Load environment variables from .env file
 # load_dotenv()

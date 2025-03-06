@@ -26,10 +26,6 @@ spec:
           value: "aks-store-demo"
         - name: AZURE_OPENAI_ENDPOINT # required if using Azure OpenAI
           value: "False"
-        - name: OPENAI_API_KEY # always required
-          value: ""
-        - name: OPENAI_ORG_ID # required if using Public OpenAI
-          value: ""
         resources:
           requests:
             cpu: 20m
