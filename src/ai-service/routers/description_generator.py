@@ -79,9 +79,12 @@ async def post_description(request: Request) -> JSONResponse:
         # Parse the request body and create a Product object
         body: dict = await request.json()
         product: Product = Product(body)
+        
+        # Get the name and tags from the Product object
         name: str = product.name
         tags: List = ",".join(product.tags)
-
+        print("<< Product Name is " + name + " >>")
+        print("<< Product Tags " + tags +" >>")
         # Create a new context and invoke the description function
         context: Any = kernel.create_new_context()
         context["name"] = name
@@ -89,11 +92,12 @@ async def post_description(request: Request) -> JSONResponse:
         result: str = await descriptionFunction.invoke_async(context=context)
         if "error" in str(result).lower():
             return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
-        print(result)
+        print("<< Got result from OpenAI " + result + " >>")
         result = str(result).replace("\n", "")
 
         # Return the description as a JSON response
         return JSONResponse(content={"description": result}, status_code=status.HTTP_200_OK)
     except Exception as e:
         # Return an error message as a JSON response
+        print("<< Got exception " + str(e) + " >>")
         return JSONResponse(content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST)
