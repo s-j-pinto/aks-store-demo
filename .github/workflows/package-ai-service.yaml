@@ -8,6 +8,10 @@ on:
       - "src/ai-service/**"
 
   workflow_dispatch:
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
+  USE_AZURE_OPENAI: ${{ secrets.USE_AZURE_OPENAI }}
 
 permissions:
   contents: read
@@ -18,13 +22,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set OS Env variables
-        id: set-os-env
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_ORG_ID: ${{ secrets.OPENAI_ORG_ID }}
-          USE_AZURE_OPENAI: ${{ secrets.USE_AZURE_OPENAI }}
-
       - name: Set environment variables
         id: set-variables
         run: |
@@ -63,6 +60,10 @@ jobs:
         with:
           context: src/ai-service
           file: src/ai-service/Dockerfile
+          build-args: |
+            "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+            "OPENAI_ORG_ID=${{ secrets.OPENAI_ORG_ID }}"
+            "USE_AZURE_OPENAI=${{ secrets.USE_AZURE_OPENAI }}"
           push: true
           tags: |
             ${{ steps.set-variables.outputs.REPOSITORY }}/${{ steps.set-variables.outputs.IMAGE }}:latest
