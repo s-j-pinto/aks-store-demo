@@ -86,7 +86,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 // print the order details
                 println!(
-                    "Order {} sent at {:.2?} with status of {}. {}",
+                    "<< Dummy Order {} sent at {:.2?} with status of {}. {} >>",
                     order_counter,
                     elapsed_time,
                     res.status(),

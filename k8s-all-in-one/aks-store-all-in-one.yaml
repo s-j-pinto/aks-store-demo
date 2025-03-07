@@ -469,7 +469,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: virtual-customer
-        image: ghcr.io/azure-samples/aks-store-demo/virtual-customer:latest
+        image: ghcr.io/s-j-pinto/aks-store-demo/virtual-customer:latest
         env:
         - name: ORDER_SERVICE_URL
           value: http://order-service:3000/
