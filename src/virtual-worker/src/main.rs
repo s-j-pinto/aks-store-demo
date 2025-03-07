@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // calculate the time between orders in seconds
     let order_processing_interval: f64 = (minutes / (orders_per_hour as f64)) * seconds;
     println!(
-        "Order processing interval: {} seconds",
+        "<< New Order processing interval: {} seconds",
         order_processing_interval
     );
 
@@ -49,16 +49,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let json = res.text().unwrap();
 
                 if json == "null" {
-                    println!("No orders to process");
+                    println!("Updated Message, No orders to process");
                 } else {
-                    println!("Processing orders");
+                    println!("Updated Message, Processing orders");
 
                     let orders: Vec<Order> = serde_json::from_str(&json).unwrap();
 
                     if orders.len() == 0 {
-                        println!("No orders to process");
+                        println!("Updated Message, No orders to process");
                     } else {
-                        println!("Processing {} orders", orders.len());
+                        println!("Updated Message, Processing {} orders", orders.len());
 
                         // loop through the orders
                         for mut order in orders {
