@@ -9,13 +9,8 @@ import os
 # import dotenv
 
 # Obtain the api key and org id for OpenAI from environment variables
-storefront_port = os.environ.get("STORE_FRONT_PORT_90_TCP")
 openai_key = os.environ.get("OPENAI_API_KEY")
-useAzureOpenAI = os.environ.get("USE_AZURE_OPENAI")
 print(openai_key)
-print(useAzureOpenAI)
-print(storefront_port)
-
 
 # Load environment variables from .env file
 # load_dotenv()

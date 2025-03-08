@@ -4,7 +4,8 @@ const bodyParser = require('body-parser')
 
 const PRODUCT_SERVICE_URL = (process.env.VUE_APP_PRODUCT_SERVICE_URL || "http://172.19.0.2:3002/")
 const MAKELINE_SERVICE_URL = (process.env.VUE_APP_MAKELINE_SERVICE_URL || "http://172.19.0.6:3001/")
-const AI_SERVICE_URL = (process.env.VUE_APP_AI_SERVICE_URL || "http://172.19.0.6:5001/")
+//const AI_SERVICE_URL = (process.env.VUE_APP_AI_SERVICE_URL || "http://172.19.0.6:5001/") commented by Sunil
+const AI_SERVICE_URL = (process.env.VUE_APP_AI_SERVICE_URL || "http://ai-service.pets.svc.cluster.local:5001/") //added by Sunil
 
 module.exports = defineConfig({
   transpileDependencies: true,

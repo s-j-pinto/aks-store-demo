@@ -43,7 +43,7 @@ With the services running, open a new terminal and navigate to the `store-front`
 ```bash
 export VUE_APP_PRODUCT_SERVICE_URL=http://localhost:3002/
 export VUE_APP_MAKELINE_SERVICE_URL=http://localhost:3001/
-export VUE_APP_AI_SERVICE_URL=http://localhost:5001/
+export Vcurl posUE_APP_AI_SERVICE_URL=http://localhost:5001/
 
 npm install
 npm run serve
