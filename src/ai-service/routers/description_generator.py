@@ -11,6 +11,8 @@ import os
 # Obtain the api key and org id for OpenAI from environment variables
 openai_key = os.environ.get("OPENAI_API_KEY")
 useAzureOpenAI = os.environ.get("USE_AZURE_OPENAI")
+org_id = os.environ.get("OPENAI_ORG_ID")
+print("<< "+ org_id + " >> ")
 print(" << "+ useAzureOpenAI + " >> ")
 print("<< " + openai_key + " >> ")
 
@@ -34,7 +36,7 @@ if isinstance(useAzureOpenAI, str) == False or (useAzureOpenAI.lower() != "true"
 
 
 if useAzureOpenAI.lower() == "false":
-    org_id = os.environ.get("OPENAI_ORG_ID")
+    # org_id = os.environ.get("OPENAI_ORG_ID")
     if isinstance(org_id, str) == False or org_id == "":
         raise Exception("OPENAI_ORG_ID environment variable must be set when USE_AZURE_OPENAI is set to False")
     # Add the OpenAI text completion service to the kernel
