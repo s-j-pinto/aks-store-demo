@@ -11,10 +11,11 @@ from google import genai
 geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
 
-if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
-    raise Exception("GEMINI_API_KEY environment variable must be set")
 if isinstance(use_geminiai, str) == False or (use_geminiai.lower() != "true" and use_geminiai.lower() != "false"):
     raise Exception("USE_GEMINIAI environment variable must be set to 'True' or 'False' string not boolean")
+
+if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
+    raise Exception("GEMINI_API_KEY environment variable must be set")
 
 
 client = genai.Client(api_key=geminiai_api_key)
