@@ -10,6 +10,8 @@ from google import genai
 
 geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
+print("<< "+ use_geminiai + " >> ")
+print(" << "+ geminiai_api_key + " >> ")
 
 if isinstance(use_geminiai, str) == False or (use_geminiai.lower() != "true" and use_geminiai.lower() != "false"):
     raise Exception("USE_GEMINIAI environment variable must be set to 'True' or 'False' string not boolean")
@@ -23,7 +25,7 @@ client = genai.Client(api_key=geminiai_api_key)
 health: APIRouter = APIRouter(prefix="/health", tags=["health"])
 
 # Define the health check endpoint
-@health.post("/health", summary="Check the health of the service", operation_id="health")
+@health.post("/health", summary="Check the health of the service", operation_id="getHealth")
 async def post_health() -> JSONResponse:
     # Return a health check message as a JSON response
     return JSONResponse(content={"message": "The service is healthy"}, status_code=status.HTTP_200_OK)
