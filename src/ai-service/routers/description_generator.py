@@ -25,8 +25,8 @@ client = genai.Client(api_key=geminiai_api_key)
 health: APIRouter = APIRouter(prefix="/health", tags=["health"])
 
 # Define the health check endpoint
-@health.post("/health", summary="Check the health of the service", operation_id="getHealth")
-async def post_health() -> JSONResponse:
+@health.get("/health", summary="Check the health of the service", operation_id="getHealth")
+async def get_health() -> JSONResponse:
     # Return a health check message as a JSON response
     return JSONResponse(content={"message": "The service is healthy"}, status_code=status.HTTP_200_OK)
 
