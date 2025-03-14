@@ -1,18 +1,18 @@
-#fastapi==0.95.2
-uvicorn==0.22.0
-#pydantic==1.10.8
-pytest==7.3.1
-httpx
-pyyaml
-semantic-kernel==0.3.1.dev0
-azure.identity==1.14.0
-google-genai
-fastapi
-# uvicorn
-pydantic
-# pytest
+# fastapi==0.95.2
+# uvicorn==0.22.0
+# pydantic==1.10.8
+# pytest==7.3.1
 # httpx
 # pyyaml
-# semantic-kernel
-# azure.identity
-# google-genai
+# semantic-kernel==0.3.1.dev0
+# azure.identity==1.14.0
+google-genai
+fastapi
+uvicorn
+pydantic
+pytest
+httpx
+pyyaml
+semantic-kernel
+azure.identity
+google-genai
