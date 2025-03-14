@@ -19,6 +19,15 @@ if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
 
 
 client = genai.Client(api_key=geminiai_api_key)
+# Define the health API router
+health: APIRouter = APIRouter(prefix="/health", tags=["health"])
+
+# Define the health check endpoint
+@health.post("/health", summary="Check the health of the service", operation_id="health")
+async def post_health() -> JSONResponse:
+    # Return a health check message as a JSON response
+    return JSONResponse(content={"message": "The service is healthy"}, status_code=status.HTTP_200_OK)
+
 
 # # Define the description API router
 description: APIRouter = APIRouter(prefix="/generate", tags=["generate"])
