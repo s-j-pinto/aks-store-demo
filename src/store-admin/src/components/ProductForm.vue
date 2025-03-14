@@ -126,57 +126,24 @@
         console.log(" << sending " + requestBody + " >> ");
         this.product.description = "";
 
-        // Convert image to base64
-        const imageInput = document.getElementById('product-image');
-        const file = imageInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            requestBody.image = reader.result;
-            console.log(" << sending inside filereader " + requestBody + " >> ");
-            fetch(`${aiServiceUrl}generate/description`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(requestBody)
-            })
-              .then(response => response.json())
-              .then(product => {
-                this.product.description = product.description
-              })
-              .catch(error => {
-                console.log(error)
-                alert('Error occurred while generating product description')
-              })
-              .finally(() => {
-                clearInterval(intervalId);
-              })
-          };
-          reader.readAsDataURL(file);
-        } else {
-          // If no file is selected, use the existing product image
-          requestBody.image = this.product.image;
-          console.log(" << inside else " + requestBody + " >> ");
-          fetch(`${aiServiceUrl}generate/description`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+        fetch(`${aiServiceUrl}generate/description`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        })
+          .then(response => response.json())
+          .then(product => {
+            this.product.description = product.description
           })
-            .then(response => response.json())
-            .then(product => {
-              this.product.description = product.description
-            })
-            .catch(error => {
-              console.log(error)
-              alert('Error occurred while generating product description')
-            })
-            .finally(() => {
-              clearInterval(intervalId);
-            })
-        }
+          .catch(error => {
+            console.log(error)
+            alert('Error occurred while generating product description')
+          })
+          .finally(() => {
+            clearInterval(intervalId);
+          })
       },
       waitForAI() {
         let dots = '';
