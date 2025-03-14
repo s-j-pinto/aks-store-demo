@@ -119,10 +119,11 @@
 
         let requestBody = {
           name: this.product.name,
+          image: this.product.image,
           tags: this.product.tags.split(',').map(tag => tag.trim())
         }
 
-        console.log(requestBody);
+        console.log(" << sending " + requestBody + " >> ");
         this.product.description = "";
 
         fetch(`${aiServiceUrl}generate/description`, {
