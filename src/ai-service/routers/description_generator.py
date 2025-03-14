@@ -6,7 +6,7 @@ from fastapi.responses import Response, JSONResponse
 # from dotenv import load_dotenv
 from typing import Any, List, Dict
 import os
-# from google import genai
+from google import genai
 
 geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
@@ -20,7 +20,7 @@ if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
     raise Exception("GEMINI_API_KEY environment variable must be set")
 
 
-# client = genai.Client(api_key=geminiai_api_key)
+client = genai.Client(api_key=geminiai_api_key)
 
 
 # Define the description API router
