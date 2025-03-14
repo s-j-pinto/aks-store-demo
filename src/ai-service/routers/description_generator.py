@@ -6,7 +6,7 @@ from fastapi.responses import Response, JSONResponse
 # from dotenv import load_dotenv
 from typing import Any, List, Dict
 import os
-from google import genai
+# from google import genai
 
 geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
@@ -20,56 +20,56 @@ if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
     raise Exception("GEMINI_API_KEY environment variable must be set")
 
 
-client = genai.Client(api_key=geminiai_api_key)
-# Define the health API router
-health: APIRouter = APIRouter(prefix="/health", tags=["health"])
+# client = genai.Client(api_key=geminiai_api_key)
+# # Define the health API router
+# health: APIRouter = APIRouter(prefix="/health", tags=["health"])
 
-# Define the health check endpoint
-@health.get("/health", summary="Check the health of the service", operation_id="getHealth")
-async def get_health() -> JSONResponse:
-    # Return a health check message as a JSON response
-    return JSONResponse(content={"message": "The service is healthy"}, status_code=status.HTTP_200_OK)
+# # Define the health check endpoint
+# @health.get("/health", summary="Check the health of the service", operation_id="getHealth")
+# async def get_health() -> JSONResponse:
+#     # Return a health check message as a JSON response
+#     return JSONResponse(content={"message": "The service is healthy"}, status_code=status.HTTP_200_OK)
 
 
-# # Define the description API router
-description: APIRouter = APIRouter(prefix="/generate", tags=["generate"])
+# # # Define the description API router
+# description: APIRouter = APIRouter(prefix="/generate", tags=["generate"])
 
-# Define the Product class
-class Product:
-    def __init__(self, product: Dict[str, List]) -> None:
-        self.name: str = product["name"]
-        self.tags: List[str] = product["tags"]
+# # Define the Product class
+# class Product:
+#     def __init__(self, product: Dict[str, List]) -> None:
+#         self.name: str = product["name"]
+#         self.tags: List[str] = product["tags"]
  
-# Define the post_description endpoint
-@description.post("/description", summary="Get description for a product", operation_id="getDescription")
-async def post_description(request: Request) -> JSONResponse:
-    try:
-        # Parse the request body and create a Product object
-        body: dict = await request.json()
-        product: Product = Product(body)
+# # Define the post_description endpoint
+# @description.post("/description", summary="Get description for a product", operation_id="getDescription")
+# async def post_description(request: Request) -> JSONResponse:
+#     try:
+#         # Parse the request body and create a Product object
+#         body: dict = await request.json()
+#         product: Product = Product(body)
         
-        # Get the name and tags from the Product object
-        name: str = product.name
-        tags: List = ",".join(product.tags)
-        print("<< Product Name is " + name + " >>")
-        print("<< Product Tags " + tags +" >>")
-        #Call the Gemini AI API to generate content for the product description
-        response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=["Describe a toy that goes by the name " + name + " and has attributes " + tags])
-        print(response.text)    
+#         # Get the name and tags from the Product object
+#         name: str = product.name
+#         tags: List = ",".join(product.tags)
+#         print("<< Product Name is " + name + " >>")
+#         print("<< Product Tags " + tags +" >>")
+#         #Call the Gemini AI API to generate content for the product description
+#         response = client.models.generate_content(
+#         model="gemini-2.0-flash",
+#         contents=["Describe a toy that goes by the name " + name + " and has attributes " + tags])
+#         print(response.text)    
 
 
-        if "error" in str(response).lower():
-            return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
-        result = str(response).replace("\n", "")
+#         if "error" in str(response).lower():
+#             return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
+#         result = str(response).replace("\n", "")
 
-        # Return the description as a JSON response
-        return JSONResponse(content={"description": result}, status_code=status.HTTP_200_OK)
-    except Exception as e:
-        # Return an error message as a JSON response
-        print("<< Got exception " + str(e) + " >>")
-        return JSONResponse(content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST)
+#         # Return the description as a JSON response
+#         return JSONResponse(content={"description": result}, status_code=status.HTTP_200_OK)
+#     except Exception as e:
+#         # Return an error message as a JSON response
+#         print("<< Got exception " + str(e) + " >>")
+#         return JSONResponse(content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST)
 
 
 # # import dotenv
