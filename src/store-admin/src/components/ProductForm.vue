@@ -119,7 +119,6 @@
 
         let requestBody = {
           name: this.product.name,
-          image: this.product.image,
           tags: this.product.tags.split(',').map(tag => tag.trim())
         }
 
