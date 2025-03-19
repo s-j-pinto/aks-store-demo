@@ -31,7 +31,7 @@ class Product:
     def __init__(self, product: Dict[str, List]) -> None:
         self.name: str = product["name"]
         self.tags: List[str] = product["tags"]
-        self.image: str = product["image"]
+        # self.image: str = product["image"]
  
 # Define the post_description endpoint
 @description.post("/description", summary="Get description for a product", operation_id="getDescription")
@@ -39,15 +39,16 @@ async def post_description(request: Request) -> JSONResponse:
     try:
         # Parse the request body and create a Product object
         body: dict = await request.json()
+        print("<< Request Body is  " + body + " >>")
         product: Product = Product(body)
         
         # Get the name and tags from the Product object
         name: str = product.name
-        image: str = product.image
+        
         tags: List = ",".join(product.tags)
         print("<< Product Name is " + name + " >>")
         print("<< Product Tags " + tags +" >>")
-        print("<< Product Image " + image +" >>")
+        
         # Call the Gemini AI API to generate content for the product description
 
         # Initialize the Gemini AI model
