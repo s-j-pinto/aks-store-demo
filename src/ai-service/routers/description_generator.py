@@ -50,10 +50,13 @@ async def post_description(request: Request) -> JSONResponse:
         # Initialize the Gemini AI model
         model = genai.GenerativeModel(model_name='gemini-2.0-flash')
         response = model.generate_content("Describe a toy that goes by the name " + name + " and has attributes " + tags)
-        print(response) 
+        returnvalue = response.candidates[0].content.parts[0].text
+        print(returnvalue) 
+        # parse the response into JSON object and retrieve the description
+
         if "error" in str(response).lower():
             return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
-        result = str(response).replace("\n", "")
+        result = str(returnvalue).replace("\n", "")
 
         # Return the description as a JSON response
         return JSONResponse(content={"description": result}, status_code=status.HTTP_200_OK)
