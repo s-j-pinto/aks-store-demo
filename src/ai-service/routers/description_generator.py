@@ -6,7 +6,8 @@ from fastapi.responses import Response, JSONResponse
 # from dotenv import load_dotenv
 from typing import Any, List, Dict
 import os
-from google import genai
+import google.generativeai as genai
+
 
 geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
@@ -20,8 +21,7 @@ if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
     raise Exception("GEMINI_API_KEY environment variable must be set")
 
 
-client = genai.Client(api_key=geminiai_api_key)
-
+genai.configure(api_key=geminiai_api_key)
 
 # Define the description API router
 description: APIRouter = APIRouter(prefix="/generate", tags=["generate"])
@@ -45,16 +45,15 @@ async def post_description(request: Request) -> JSONResponse:
         tags: List = ",".join(product.tags)
         print("<< Product Name is " + name + " >>")
         print("<< Product Tags " + tags +" >>")
-        #Call the Gemini AI API to generate content for the product description
-        # response = client.models.generate_content(
-        # model="gemini-2.0-flash",
-        # contents=["Describe a toy that goes by the name " + name + " and has attributes " + tags])
-        # print(response.text)    
-        result = "This is a toy that goes by the name " + name + " and has attributes " + tags
+        # Call the Gemini AI API to generate content for the product description
 
-        # if "error" in str(response).lower():
-        #     return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
-        # result = str(response).replace("\n", "")
+        # Initialize the Gemini AI model
+        model = genai.GenerativeModel(model_name='gemini-2.0-flash')
+        response = model.generate_content("Describe a toy that goes by the name " + name + " and has attributes " + tags)
+        print(response) 
+        if "error" in str(response).lower():
+            return Response(content=str(result), status_code=status.HTTP_401_UNAUTHORIZED)
+        result = str(response).replace("\n", "")
 
         # Return the description as a JSON response
         return JSONResponse(content={"description": result}, status_code=status.HTTP_200_OK)
