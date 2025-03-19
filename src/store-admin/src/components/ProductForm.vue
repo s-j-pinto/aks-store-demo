@@ -132,10 +132,11 @@
         const file = imageInput.files ? imageInput.files[0] : null;
 
         if (file) {
+          alert('Uploading image to AI service. This may take a few seconds...');
           const reader = new FileReader();
           reader.onloadend = () => {
             requestBody.image = reader.result; // Set the base64-encoded image
-
+            alert('Image uploaded successfully. Generating product description... ' + requestBody);
             // Send the request with the updated requestBody
             fetch(`${aiServiceUrl}generate/description`, {
               method: 'POST',
@@ -159,6 +160,7 @@
           reader.readAsDataURL(file); // Convert the file to base64
         } else {
           // If no file is selected, send the existing product.image
+          alert('No image found vanila request being sent... ' + requestBody);
           fetch(`${aiServiceUrl}generate/description`, {
             method: 'POST',
             headers: {
