@@ -109,40 +109,75 @@
     },
     methods: {
       generateDescription() {
-        // ensure the tag has a value
+        // Ensure the tag has a value
         if (this.product.tags.length === 0) {
-          alert('Please enter a value for the keywords field')
+          alert('Please enter a value for the keywords field');
           return;
         }
 
         const intervalId = this.waitForAI();
 
+        // Prepare the request body
         let requestBody = {
           name: this.product.name,
-          tags: this.product.tags.split(',').map(tag => tag.trim())
-        }
+          tags: this.product.tags.split(',').map(tag => tag.trim()),
+          image: this.product.image // Include the product image
+        };
 
-        console.log(" << sending " + requestBody + " >> ");
+        console.log("<< Sending request body >>", requestBody);
         this.product.description = "";
 
-        fetch(`${aiServiceUrl}generate/description`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(requestBody)
-        })
-          .then(response => response.json())
-          .then(product => {
-            this.product.description = product.description
+        // If the image is a file, convert it to base64
+        const imageInput = document.getElementById('product-image');
+        const file = imageInput.files ? imageInput.files[0] : null;
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            requestBody.image = reader.result; // Set the base64-encoded image
+
+            // Send the request with the updated requestBody
+            fetch(`${aiServiceUrl}generate/description`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(requestBody)
+            })
+              .then(response => response.json())
+              .then(product => {
+                this.product.description = product.description;
+              })
+              .catch(error => {
+                console.log(error);
+                alert('Error occurred while generating product description');
+              })
+              .finally(() => {
+                clearInterval(intervalId);
+              });
+          };
+          reader.readAsDataURL(file); // Convert the file to base64
+        } else {
+          // If no file is selected, send the existing product.image
+          fetch(`${aiServiceUrl}generate/description`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
           })
-          .catch(error => {
-            console.log(error)
-            alert('Error occurred while generating product description')
-          })
-          .finally(() => {
-            clearInterval(intervalId);
-          })
+            .then(response => response.json())
+            .then(product => {
+              this.product.description = product.description;
+            })
+            .catch(error => {
+              console.log(error);
+              alert('Error occurred while generating product description');
+            })
+            .finally(() => {
+              clearInterval(intervalId);
+            });
+        }
       },
       waitForAI() {
         let dots = '';
