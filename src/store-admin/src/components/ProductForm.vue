@@ -135,7 +135,8 @@
         //code to load image from file path
         const file = this.product.image;
 
-
+        alert('file: ' + file);
+        
         if (file) {
           alert('Uploading image to AI service. This may take a few seconds...');
           const reader = new FileReader();
