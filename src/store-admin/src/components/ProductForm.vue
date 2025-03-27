@@ -111,7 +111,7 @@
       generateDescription() {
         // Ensure the tag has a value
         if (this.product.tags.length === 0) {
-          alert('Please enter a value for the keywords field');
+          alert('Please enter a value for the keywords field before asking AI service');
           return;
         }
 
@@ -129,8 +129,9 @@
 
         // If the image is a file, convert it to base64
         const imageInput = document.getElementById('product-image');
+        alert('imageInput: ' + imageInput.JSON.stringify());
         const file = imageInput.files ? imageInput.files[0] : null;
-
+        alert('file: ' + file);
         if (file) {
           alert('Uploading image to AI service. This may take a few seconds...');
           const reader = new FileReader();
