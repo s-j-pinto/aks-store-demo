@@ -129,7 +129,7 @@
 
         // If the image is a file, convert it to base64
         const imageInput = document.getElementById('product-image');
-        alert('imageInput: ' + imageInput.JSON.stringify());
+        alert('imageInput: ' + imageInput);
         const file = imageInput.files ? imageInput.files[0] : null;
         alert('file: ' + file);
         if (file) {
