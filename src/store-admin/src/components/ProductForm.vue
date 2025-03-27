@@ -34,7 +34,7 @@
 
     <div class="form-row">
       <label for="product-image">Image</label>
-      <input id="product-image" placeholder="Product Image" v-model="product.image" />
+      <input id="product-image" ref="productImageInput" placeholder="Product Image" v-model="product.image" />
     </div>
   </div>
 </template>
@@ -128,7 +128,7 @@
         this.product.description = "";
 
         // If the image is a file, convert it to base64
-        const imageInput = document.getElementById('product-image');
+        const imageInput = this.$refs.productImageInput;
         alert('imageInput: ' + imageInput.files);
         const file = imageInput.files ? imageInput.files[0] : null;
         alert('file: ' + file);
