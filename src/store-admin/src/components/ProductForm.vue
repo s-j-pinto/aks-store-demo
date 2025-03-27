@@ -128,10 +128,14 @@
         this.product.description = "";
 
         // If the image is a file, convert it to base64
-        const imageInput = this.$refs.productImageInput;
-        alert('imageInput: ' + imageInput.files);
-        const file = imageInput.files ? imageInput.files[0] : null;
-        alert('file: ' + file);
+        // const imageInput = this.$refs.productImageInput;
+        // alert('imageInput: ' + imageInput.files);
+        // const file = imageInput.files ? imageInput.files[0] : null;
+        // alert('file: ' + file);
+        //code to load image from file path
+        const file = this.product.image;
+
+
         if (file) {
           alert('Uploading image to AI service. This may take a few seconds...');
           const reader = new FileReader();
