@@ -169,7 +169,7 @@ export default {
                                     clearInterval(intervalId);
                                 });
                         };
-                        reader.readAsDataURL(file); // Convert the file to base64
+                        reader.readAsDataURL(blob); // Convert the blob to base64
                         })
                         .catch(error => {
                             console.log(error);
