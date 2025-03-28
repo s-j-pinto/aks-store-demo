@@ -32,9 +32,12 @@
       <input type="hidden" id="product-id" placeholder="Product ID" v-model="product.id" />
     </div>
 
+    <div class="product-image">
+      <img :src="product.image" ref="productImage" alt="Product Image">
+    </div>
     <div class="form-row">
       <label for="product-image">Image</label>
-      <input id="product-image" ref="productImageInput" placeholder="Product Image" v-model="product.image" />
+      <input id="product-image" placeholder="Product Image" v-model="product.image" />
     </div>
   </div>
 </template>
@@ -128,14 +131,9 @@
         this.product.description = "";
 
         // If the image is a file, convert it to base64
-        // const imageInput = this.$refs.productImageInput;
-        // alert('imageInput: ' + imageInput.files);
-        // const file = imageInput.files ? imageInput.files[0] : null;
-        // alert('file: ' + file);
-        //code to load image from file path
-        const file = this.product.image;
-
-        alert('file: ' + file);
+        const imageInput = this.$refs.productImage;
+        alert('imageInput:>> ' + imageInput.files);
+        const file = imageInput.files ? imageInput.files[0] : null;
         
         if (file) {
           alert('Uploading image to AI service. This may take a few seconds...');
@@ -250,5 +248,17 @@ ul {
   padding: 0;
   width: 100%;
   color: #ff0000;
+}
+
+.product-image {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 </style>
