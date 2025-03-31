@@ -1,4 +1,5 @@
 # from azure.identity import DefaultAzureCredential
+import base64
 from fastapi import APIRouter, Request, status
 from fastapi.responses import Response, JSONResponse
 #import semantic_kernel as sk
@@ -31,7 +32,7 @@ class Product:
     def __init__(self, product: Dict[str, List]) -> None:
         self.name: str = product["name"]
         self.tags: List[str] = product["tags"]
-        # self.image: str = product["image"]
+        self.image: str = product["image"]
  
 # Define the post_description endpoint
 @description.post("/description", summary="Get description for a product", operation_id="getDescription")
@@ -44,12 +45,25 @@ async def post_description(request: Request) -> JSONResponse:
         
         # Get the name and tags from the Product object
         name: str = product.name
-        
-        tags: List = ",".join(product.tags)
+
+        # Code to recieve base64 encoded JSON data and decode it and create image
+        image: str = product.image
+        if image is not None:
+            image = image.split(",")[1]
+            with open("image.png", "wb") as f:
+                f.write(base64.b64decode(image))
+        tags: str = product.tags
+        if tags is not None:
+            tags = ",".join(product.tags)
+        else:
+            tags = ""
         print("<< Product Name is " + name + " >>")
         print("<< Product Tags " + tags +" >>")
+
         
-        # Call the Gemini AI API to generate content for the product description
+        # Call the Gemini AI API to generate content for the product description and image
+        
+
 
         # Initialize the Gemini AI model
         model = genai.GenerativeModel(model_name='gemini-2.0-flash')

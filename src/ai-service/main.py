@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import   JSONResponse
 import json
 
-app = FastAPI()
+app = FastAPI(max_request_body_size=1024 * 1024 * 10)  # 10 MB limit
 app.include_router(description)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
