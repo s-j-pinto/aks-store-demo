@@ -38,9 +38,11 @@ class Product:
 @description.post("/description", summary="Get description for a product", operation_id="getDescription")
 async def post_description(request: Request) -> JSONResponse:
     try:
+        print("<< CHKPOINT 1 >> ")
         # Parse the request body and create a Product object
         body: dict = await request.json()
         print("<< Request Body is  " + str(body) + " >>")
+        print("<< CHKPOINT 2 >> ")
         product: Product = Product(body)
         
         # Get the name and tags from the Product object
@@ -48,21 +50,26 @@ async def post_description(request: Request) -> JSONResponse:
 
         # Code to recieve base64 encoded JSON data and decode it and create image
         image: str = product.image
+        print("<< CHKPOINT 3 >> " + str(image) + " >>")
         if image is not None:
+            print("<< CHKPOINT 4 >> ")
             image = image.split(",")[1]
             with open("image.png", "wb") as f:
                 f.write(base64.b64decode(image))
-        tags: str = product.tags
-        if tags is not None:
-            tags = ",".join(product.tags)
+            print("<< CHKPOINT 5 >> ")
         else:
-            tags = ""
+            print("<< CHKPOINT 6 >> ")
+            tags: str = product.tags
+            if tags is not None:
+                tags = ",".join(product.tags)
+            else:
+                tags = ""
         print("<< Product Name is " + name + " >>")
         print("<< Product Tags " + tags +" >>")
 
         
         # Call the Gemini AI API to generate content for the product description and image
-        
+
 
 
         # Initialize the Gemini AI model
