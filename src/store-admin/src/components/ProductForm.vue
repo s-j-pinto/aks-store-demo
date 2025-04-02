@@ -149,6 +149,7 @@ export default {
                         reader.onloadend = () => {
                             requestBody["image"] = reader.result; // Set the base64-encoded image
                             alert('Image uploaded successfully. Generating product description... ');
+                            console.log("<< Sending request body with image >>", requestBody);
                             // Send the request with the updated requestBody
                             fetch(`${aiServiceUrl}generate/description`, {
                                     method: 'POST',

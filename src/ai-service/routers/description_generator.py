@@ -41,6 +41,7 @@ async def post_description(request: Request) -> JSONResponse:
     try:
         print("<< CHKPOINT 1 >> ")
         # Parse the request body and create a Product object
+        
         body: dict = await request.json()
         # code to print all keys and value in the dictionary body
         for key, value in body.items():
