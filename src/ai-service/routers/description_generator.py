@@ -43,6 +43,7 @@ async def post_description(request: Request) -> JSONResponse:
         # Parse the request body and create a Product object
 
         body: dict = await request.json()
+        print("<< CHKPOINT 1.1 >> " + str(body) + " >>")
         if body is None:
             raise Exception("Request body is empty")
         if "name" not in body or "tags" not in body:
