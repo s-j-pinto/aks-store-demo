@@ -42,7 +42,7 @@ async def post_description(request: Request) -> JSONResponse:
         print("<< CHKPOINT 1 >> ")
         # Parse the request body and create a Product object
         body: dict = await request.json()
-        print("<< Request Body is  " + str(body) + " >>")
+        print("<< Request Body is  " + body + " >>")
         print("<< CHKPOINT 2 >> ")
         product: Product = Product(body)
         

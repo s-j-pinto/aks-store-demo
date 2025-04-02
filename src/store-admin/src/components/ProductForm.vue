@@ -147,8 +147,8 @@ export default {
                 .then(blob => {
                         const reader = new FileReader();
                         reader.onloadend = () => {
-                            requestBody.image = reader.result; // Set the base64-encoded image
-                            alert('Image uploaded successfully. Generating product description... ' + requestBody.image);
+                            requestBody["image"] = reader.result; // Set the base64-encoded image
+                            alert('Image uploaded successfully. Generating product description... ');
                             // Send the request with the updated requestBody
                             fetch(`${aiServiceUrl}generate/description`, {
                                     method: 'POST',
