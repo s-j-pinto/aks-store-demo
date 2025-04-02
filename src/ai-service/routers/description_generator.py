@@ -39,10 +39,19 @@ class Product:
 @description.post("/description", summary="Get description for a product", operation_id="getDescription")
 async def post_description(request: Request) -> JSONResponse:
     try:
-        print("<< CHKPOINT 1 >> ")
+        print("<< CHKPOINT 1 >> " )
         # Parse the request body and create a Product object
-        
+
         body: dict = await request.json()
+        if body is None:
+            raise Exception("Request body is empty")
+        if "name" not in body or "tags" not in body:
+            raise Exception("Request body must contain 'name' and 'tags' fields")
+        if "image" not in body:
+            raise Exception("Request body must contain 'image' field")
+        # Check if the body is a dictionary
+        if not isinstance(body, dict):
+            raise Exception("Request body must be a dictionary")
         # code to print all keys and value in the dictionary body
         for key, value in body.items():
             print(f"{key}: {value}")
