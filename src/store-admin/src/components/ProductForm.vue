@@ -153,11 +153,11 @@ export default {
                             // Send the request with the updated requestBody
                             fetch(`${aiServiceUrl}generate/description`, {
                                     method: 'POST',
-                                    body: JSON.stringify(requestBody),
                                     headers: {
                                         'Content-Type': 'application/json'
-                                    }
-                                })
+                                    },
+                                    body: JSON.stringify(requestBody)
+                                   })
                                 .then(response => response.json())
                                 .then(product => {
                                     this.product.description = product.description;
