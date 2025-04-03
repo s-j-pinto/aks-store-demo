@@ -152,6 +152,11 @@ export default {
                             // Send the request with the updated requestBody
                             fetch(`${aiServiceUrl}generate/description`, {
                                     method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    // Send the request body as JSON
+                                    // and include the base64-encoded image
                                     body: JSON.stringify(requestBody)
                                 })
                                 .then(response => response.json())
