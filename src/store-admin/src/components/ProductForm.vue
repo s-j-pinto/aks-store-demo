@@ -148,16 +148,12 @@ export default {
                         const reader = new FileReader();
                         reader.onloadend = () => {
                             requestBody.image = reader.result; // Set the base64-encoded image
-                            // alert('Image uploaded successfully. Generating product description... ');
-                            console.log("<< Sending request body with image >>", requestBody);
+                            alert('Image uploaded successfully. Generating product description... ' + requestBody.image);
                             // Send the request with the updated requestBody
                             fetch(`${aiServiceUrl}generate/description`, {
                                     method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
                                     body: JSON.stringify(requestBody)
-                                   })
+                                })
                                 .then(response => response.json())
                                 .then(product => {
                                     this.product.description = product.description;
