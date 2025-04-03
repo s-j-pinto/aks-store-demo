@@ -14,36 +14,33 @@ geminiai_api_key = os.environ.get("GEMINI_API_KEY")
 use_geminiai = os.environ.get("USE_GEMINIAI")
 print("<< "+ use_geminiai + " >> ")
 print(" << "+ geminiai_api_key + " >> ")
-print("<< CHKPOINT -2 >> ")
+
 if isinstance(use_geminiai, str) == False or (use_geminiai.lower() != "true" and use_geminiai.lower() != "false"):
     raise Exception("USE_GEMINIAI environment variable must be set to 'True' or 'False' string not boolean")
 
 if (isinstance(geminiai_api_key, str) == False or geminiai_api_key == ""):
     raise Exception("GEMINI_API_KEY environment variable must be set")
-print("<< CHKPOINT -1 >> ")
+
 
 genai.configure(api_key=geminiai_api_key)
 
 # Define the description API router
 description: APIRouter = APIRouter(prefix="/generate", tags=["generate"])
-print("<< CHKPOINT 0 >> ")
+
 # Define the Product class
 class Product:
     def __init__(self, product: Dict[str, List]) -> None:
         self.name: str = product["name"]
         self.tags: List[str] = product["tags"]
-        print("<< CHKPOINT 100 >> ")
         self.image: str = product["image"]
  
 # Define the post_description endpoint
 @description.post("/description", summary="Get description for a product", operation_id="getDescription")
 async def post_description(request: Request) -> JSONResponse:
     try:
-        print("<< CHKPOINT 1 >> ")
         # Parse the request body and create a Product object
         body: dict = await request.json()
         print("<< Request Body is  " + str(body) + " >>")
-        print("<< CHKPOINT 2 >> ")
         product: Product = Product(body)
         
         # Get the name and tags from the Product object
@@ -51,26 +48,21 @@ async def post_description(request: Request) -> JSONResponse:
 
         # Code to recieve base64 encoded JSON data and decode it and create image
         image: str = product.image
-        print("<< CHKPOINT 3 >> " + str(image) + " >>")
         if image is not None:
-            print("<< CHKPOINT 4 >> ")
             image = image.split(",")[1]
             with open("image.png", "wb") as f:
                 f.write(base64.b64decode(image))
-            print("<< CHKPOINT 5 >> ")
+        tags: str = product.tags
+        if tags is not None:
+            tags = ",".join(product.tags)
         else:
-            print("<< CHKPOINT 6 >> ")
-            tags: str = product.tags
-            if tags is not None:
-                tags = ",".join(product.tags)
-            else:
-                tags = ""
+            tags = ""
         print("<< Product Name is " + name + " >>")
         print("<< Product Tags " + tags +" >>")
 
         
         # Call the Gemini AI API to generate content for the product description and image
-
+        
 
 
         # Initialize the Gemini AI model
